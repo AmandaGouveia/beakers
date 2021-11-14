@@ -84,7 +84,7 @@ fn show_game(v: &Vec<[usize;BEAKER_SIZE]>){
     println!("\nType q to quit\nType AB to pour from A to B")
 }
 fn main() {
-    let difficulty = 5;
+    let difficulty = 8;
     if difficulty > FILLS.len()-1 {
         println!("Max difficulty is {}. Goodbye.", FILLS.len()-1);
         return;
