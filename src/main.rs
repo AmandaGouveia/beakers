@@ -56,7 +56,7 @@ fn show_game(v: &Vec<[usize;BEAKER_SIZE]>){
     let mut out: String;
     
     println!("\n\n\n\nSORT THE LIQUIDS\n");
-    
+
     for row in 0..BEAKER_SIZE {
         let mut out = "".to_string();
         for b in 0..size {
@@ -85,6 +85,10 @@ fn show_game(v: &Vec<[usize;BEAKER_SIZE]>){
 }
 fn main() {
     let difficulty = 5;
+    if difficulty > FILLS.len()-1 {
+        println!("Max difficulty is {}. Goodbye.", FILLS.len()-1);
+        return;
+    }
     let mut bs: Vec<[usize; BEAKER_SIZE]> = vec![];
 
     for n in 0..difficulty + 1 {
