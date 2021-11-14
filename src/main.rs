@@ -4,7 +4,7 @@ use rand::Rng;
 
 const BEAKER_SIZE: usize = 4;
 const ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const FILLS: &str = "#$%^@&*!";
+const FILLS: &str = "^#$%@&!:><?()+=-~";
 
 fn mv (v: &mut Vec<[usize;BEAKER_SIZE]>, f: usize, t:usize) -> bool {
     if v[f][BEAKER_SIZE-1] > 0 && v[t][0] == 0 {
@@ -32,7 +32,7 @@ fn mv (v: &mut Vec<[usize;BEAKER_SIZE]>, f: usize, t:usize) -> bool {
 fn shuffle (v: &mut Vec<[usize;BEAKER_SIZE]>) {
     let mut random_beakers: Vec<usize> = (0..v.len()).collect();
     loop {
-        for _ in 0..100 {
+        for _ in 0..200 {
             rand::thread_rng().shuffle(&mut random_beakers);
             mv(v, random_beakers[0], random_beakers[1]);
         }
@@ -50,26 +50,19 @@ fn solved(v: &Vec<[usize;BEAKER_SIZE]>) -> bool {
     }
     true
 }
-fn test_out(v: &Vec<[usize;BEAKER_SIZE]>){
-    println!("{}",solved(&v));
-    println!("{:?}",v);
-}
 
 fn show_game(v: &Vec<[usize;BEAKER_SIZE]>){
     let size = v.len();
-    let mut out = "".to_string();
-    for b in 0..size {
-        out += " | |";
-    }
-    println!("{}",out);
+    let mut out: String;
+    
+    println!("\n\n\n\nSORT THE LIQUIDS\n");
+    
     for row in 0..BEAKER_SIZE {
         let mut out = "".to_string();
         for b in 0..size {
             out += " |";
             if v[b][row] > 0{
-                //out += v[b][row].to_string().as_str();
                 out += FILLS[v[b][row]..v[b][row]+1].to_string().as_str();
-        
             } else {
                 out += " ";
             }
@@ -88,30 +81,27 @@ fn show_game(v: &Vec<[usize;BEAKER_SIZE]>){
         out_numbers += " ";
     }
     println!("{}\n{}",out, out_numbers);
-    println!("Type q to quit or type AB to pour from A to B")
+    println!("\nType q to quit\nType AB to pour from A to B")
 }
 fn main() {
-    let difficulty = 4;
+    let difficulty = 5;
     let mut bs: Vec<[usize; BEAKER_SIZE]> = vec![];
-    //= vec![[0; BEAKER_SIZE]];
 
     for n in 0..difficulty + 1 {
         bs.push([n; BEAKER_SIZE]);
     }
     shuffle(&mut bs);
-//    mv(&mut bs, 2, 0);
-    let result = loop {
+    let _ = loop {
         show_game(&bs);
         if solved(&bs) {
-            println!("WINNER!");
+            println!("\nYOU ARE A WINNER!");
             break true;
         }
         let mut action = String::new();
-        //show_game(&bs);
-        let b1 = std::io::stdin().read_line(&mut action).unwrap();
-        //println!("You said: {}", action);
+        let _ = std::io::stdin().read_line(&mut action).unwrap();
+        
         if action == "q\n".to_string() {
-            println!("Quit");
+            println!("Goodbye!");
             break false;
         } else {
             if ALPHABET.contains(action[0..1].chars().next().unwrap()) {
@@ -123,6 +113,4 @@ fn main() {
             }
         }
     }; 
-
-    println!("Goodbye.");
 }
