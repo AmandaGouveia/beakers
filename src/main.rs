@@ -8,9 +8,18 @@ use std::cmp::min;
 const REGULAR_PAIR: i16 = 0;
 const HIGHLIGHT_PAIR: i16 = 1;
 const UI_PAIR: i16 = 2;
+const PAIR_1: i16 = 3;
+const PAIR_2: i16 = 4;
+const PAIR_3: i16 = 5;
+const PAIR_4: i16 = 6;
+const PAIR_5: i16 = 7;
+const PAIR_6: i16 = 8;
+const PAIR_7: i16 = 9;
 
+const block: &str = "{u219}";
 
 const BEAKER_SIZE: usize = 4;
+const MAX_DIFFICULTY: usize = 7;
 const ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const FILLS: &str = "^#$%@&!:><?()+=-~";
 
@@ -174,8 +183,16 @@ fn main() {
     curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE);
     start_color();
     init_pair(REGULAR_PAIR, COLOR_WHITE, COLOR_BLACK);
-    init_pair(HIGHLIGHT_PAIR, COLOR_BLACK, COLOR_WHITE);
-    init_pair(UI_PAIR, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(HIGHLIGHT_PAIR, COLOR_MAGENTA, COLOR_YELLOW);
+    init_pair(UI_PAIR, COLOR_WHITE, COLOR_BLACK);
+    init_pair(PAIR_1, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(PAIR_2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(PAIR_3, COLOR_BLUE, COLOR_BLACK);
+    init_pair(PAIR_4, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(PAIR_5, COLOR_CYAN, COLOR_BLACK);
+    init_pair(PAIR_6, COLOR_WHITE, COLOR_BLACK);
+    init_pair(PAIR_7, COLOR_RED, COLOR_BLACK);
+    
 
     refresh();
     
@@ -188,7 +205,8 @@ fn main() {
         ui.begin(0,0);
         {
             ui.label("Sort the Colors", UI_PAIR);
-            
+            ui.label(" |█| ", UI_PAIR);
+
         }
         refresh();
         let key = getch();
